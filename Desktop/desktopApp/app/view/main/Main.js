@@ -19,6 +19,7 @@
  * @extends Ext.panel.Panel
  * <p>This class manages the wallpaper, shortcuts and taskbar.</p>
  */
+
 Ext.define('desktop.view.main.Main', {
     extend: 'Ext.ux.desktop.App',
 
@@ -30,13 +31,13 @@ Ext.define('desktop.view.main.Main', {
         /*'Desktop.SystemStatus',
         'Desktop.VideoWindow',
         'Desktop.GridWindow',
-        'Desktop.TabWindow',
-        'Desktop.AccordionWindow',
+        'Desktop.TabWindow',*/
+        'modulos.accordion.AccordionWindow'/*,
         'Desktop.Notepad',
         'Desktop.BogusMenuModule',
         'Desktop.BogusModule',
 
-//        'Desktop.Blockalanche',
+        'Desktop.Blockalanche',
         'Desktop.Settings'*/
     ],
 
@@ -54,8 +55,10 @@ Ext.define('desktop.view.main.Main', {
             //new Desktop.Blockalanche(),
             /*new Desktop.SystemStatus(),
             new Desktop.GridWindow(),
-            new Desktop.TabWindow(),
-            new Desktop.AccordionWindow(),
+            new Desktop.TabWindow(),*/
+            new modulos.accordion.AccordionWindow({
+                prueba:'hola'
+            })/*,
             new Desktop.Notepad(),
             new Desktop.BogusMenuModule(),
             new Desktop.BogusModule()*/
@@ -83,7 +86,7 @@ Ext.define('desktop.view.main.Main', {
             }),
 
             wallpaper: 'resources/images/wallpapers/Blue-Sencha.jpg',
-            wallpaperStretch: false
+            wallpaperStretch: true
         });
     },
 
@@ -92,7 +95,7 @@ Ext.define('desktop.view.main.Main', {
         var me = this, ret = me.callParent();
 
         return Ext.apply(ret, {
-            title: 'Don Griffin',
+            title: 'Mario Adrian',
             iconCls: 'user',
             height: 300,
             toolConfig: {
