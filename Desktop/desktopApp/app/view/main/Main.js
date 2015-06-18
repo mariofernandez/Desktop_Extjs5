@@ -32,13 +32,14 @@ Ext.define('desktop.view.main.Main', {
         'Desktop.VideoWindow',
         'Desktop.GridWindow',
         'Desktop.TabWindow',*/
-        'modulos.accordion.AccordionWindow'/*,
+        'modulos.accordion.AccordionWindow',/*,
         'Desktop.Notepad',
         'Desktop.BogusMenuModule',
         'Desktop.BogusModule',
 
-        'Desktop.Blockalanche',
-        'Desktop.Settings'*/
+        'Desktop.Blockalanche'*/
+        'modulos.configuracion.Settings',
+        'modulos.configuracion.model.Wallpaper'
     ],
 
     init: function() {
@@ -80,8 +81,8 @@ Ext.define('desktop.view.main.Main', {
                 data: [
                     { name: 'Grid Window', iconCls: 'grid-shortcut', module: 'grid-win' },
                     { name: 'Accordion Window', iconCls: 'accordion-shortcut', module: 'acc-win' },
-                    { name: 'Notepad', iconCls: 'notepad-shortcut', module: 'notepad' },
-                    { name: 'System Status', iconCls: 'cpu-shortcut', module: 'systemstatus'}
+                    { name: 'Notepad', iconCls: 'notepad-shortcut', module: 'notepad' }//,
+                    //{ name: 'System Status', iconCls: 'cpu-shortcut', module: 'systemstatus'}
                 ]
             }),
 
@@ -138,7 +139,7 @@ Ext.define('desktop.view.main.Main', {
     },
 
     onSettings: function () {
-        var dlg = new Desktop.Settings({
+        var dlg = new modulos.configuracion.Settings({
             desktop: this.desktop
         });
         dlg.show();
