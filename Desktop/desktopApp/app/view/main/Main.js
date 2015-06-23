@@ -99,7 +99,7 @@ Ext.define('desktop.view.main.Main', {
        /* console.log(ret);
         console.log(menu);*/
         return Ext.apply(menu, {
-            title: 'Mario Adrian',
+            title: 'Mario Adri&aacute;n',
             iconCls: 'user',
             height: 300,
             toolConfig: {
