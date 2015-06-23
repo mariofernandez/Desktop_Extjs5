@@ -32,14 +32,16 @@ Ext.define('desktop.view.main.Main', {
         'Desktop.VideoWindow',
         'Desktop.GridWindow',
         'Desktop.TabWindow',*/
-        'modulos.accordion.AccordionWindow',/*,
+        'desktop.modulos.accordion.AccordionWindow',/*,
         'Desktop.Notepad',
         'Desktop.BogusMenuModule',
         'Desktop.BogusModule',
 
         'Desktop.Blockalanche'*/
-        'modulos.configuracion.Settings',
-        'modulos.configuracion.model.Wallpaper'
+        'desktop.modulos.menu.BogusMenuModule',
+        'desktop.modulos.menu.BogusModule',
+        'desktop.modulos.configuracion.Settings',
+        'desktop.modulos.configuracion.model.Wallpaper'
     ],
 
     init: function() {
@@ -57,12 +59,11 @@ Ext.define('desktop.view.main.Main', {
             /*new Desktop.SystemStatus(),
             new Desktop.GridWindow(),
             new Desktop.TabWindow(),*/
-            new modulos.accordion.AccordionWindow({
+            new desktop.modulos.accordion.AccordionWindow({
                 prueba:'hola'
-            })/*,
-            new Desktop.Notepad(),
-            new Desktop.BogusMenuModule(),
-            new Desktop.BogusModule()*/
+            }),
+            //new Desktop.Notepad(),
+            new desktop.modulos.menu.BogusMenuModule()
         ];
     },
 
@@ -94,8 +95,10 @@ Ext.define('desktop.view.main.Main', {
     // config for the start menu
     getStartConfig : function() {
         var me = this, ret = me.callParent();
-
-        return Ext.apply(ret, {
+        var menu  = me.menuPanels(me, me.modules);
+       /* console.log(ret);
+        console.log(menu);*/
+        return Ext.apply(menu, {
             title: 'Mario Adrian',
             iconCls: 'user',
             height: 300,
@@ -119,6 +122,35 @@ Ext.define('desktop.view.main.Main', {
             }
         });
     },
+    /****************************************************
+    *    Autor: Mario Adrián Martínez Fernández
+    *           mario.martinez.f@hotmail.es    
+    *    Fecha: 23 de junio de 2015
+    *    Descripción: Crea el menu el cual tendra permisos el 
+    *            usuario.
+    *    Parametros: 
+    *        app: Recibe el contexto de la aplicación
+    *                (desktop).
+    *        modules: Recibe el arreglo de modulos cargados
+    *                     a los cuales en un momento dado
+    *                     el usuario tendra permisos.
+    *****************************************************/
+    menuPanels:function(app, modules){
+        console.log(modules);
+        var cfg = {
+                app: app,
+                menu: []
+            };
+            var launcher={
+                text: 'Accordion Window',
+                iconCls:'accordion'
+            };
+             launcher.handler = launcher.handler || Ext.bind(app.createWindow, app, [modules[0]]);
+
+            cfg.menu.push(launcher);
+            return cfg;
+        /*console.log(app);*/
+    },
 
     getTaskbarConfig: function () {
         var ret = this.callParent();
@@ -139,7 +171,7 @@ Ext.define('desktop.view.main.Main', {
     },
 
     onSettings: function () {
-        var dlg = new modulos.configuracion.Settings({
+        var dlg = new desktop.modulos.configuracion.Settings({
             desktop: this.desktop
         });
         dlg.show();
