@@ -41,6 +41,7 @@ Ext.define('desktop.view.main.Main', {
         'desktop.modulos.menu.BogusMenuModule',
         'desktop.modulos.menu.BogusModule',
         'desktop.modulos.configuracion.Settings',
+        //'desktop.modulos.configuracion.dkt',
         'desktop.modulos.configuracion.model.Wallpaper'
     ],
 
@@ -53,6 +54,15 @@ Ext.define('desktop.view.main.Main', {
     },
 
     getModules : function(){
+       this.post('prueba','consulta', {
+                    
+                    scope   : this,
+                    success : function(response){
+                        var respuesta = Ext.decode(response.responseText);
+                        console.log(respuesta);
+                       
+                    }
+                });    
         return [
             //new Desktop.VideoWindow(),
             //new Desktop.Blockalanche(),
@@ -68,6 +78,7 @@ Ext.define('desktop.view.main.Main', {
     },
 
     getDesktopConfig: function () {
+
         var me = this, ret = me.callParent();
 
         return Ext.apply(ret, {
@@ -143,11 +154,26 @@ Ext.define('desktop.view.main.Main', {
             };
             var launcher={
                 text: 'Accordion Window',
-                iconCls:'accordion'
+                iconCls:'accordion',
+                handler: function() {
+                    return false;
+                },
+                menu: {
+                    items: []
+                }
             };
-             launcher.handler = launcher.handler || Ext.bind(app.createWindow, app, [modules[0]]);
+             //launcher.handler = launcher.handler || Ext.bind(app.createWindow, app, [modules[0]]);
 
             cfg.menu.push(launcher);
+            console.log(cfg.menu[0]);
+            cfg.menu[0].menu.items.push({
+                text: 'Window 1',
+                iconCls:'bogus',
+                handler : Ext.bind(app.createWindow, app, [modules[0]]),
+                scope: this,
+                windowId: 1
+            });
+
             return cfg;
         /*console.log(app);*/
     },
@@ -175,5 +201,15 @@ Ext.define('desktop.view.main.Main', {
             desktop: this.desktop
         });
         dlg.show();
+    },
+    post: function (clas,metod,obj){
+        obj.params= Ext.isEmpty(obj.params)?{_dc:""}:obj.params;
+        Ext.Ajax.request({
+           url:"index.php"+"/"+clas+"/"+metod,
+           scope:obj.scope,
+           success: obj.success,
+           failure: obj.failure,
+           params: obj.params
+        });
     }
 });
